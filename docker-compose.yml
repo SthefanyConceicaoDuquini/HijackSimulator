@@ -1,0 +1,28 @@
+version: '3.9'
+services:
+  as1:
+    build: .
+    volumes:
+      - ./configs/AS1.conf:/etc/bird.conf
+    networks:
+      link1:
+        ipv4_address: 10.99.0.2
+    cap_add:
+      - NET_ADMIN
+
+  as2:
+    build: .
+    volumes:
+      - ./configs/AS2.conf:/etc/bird.conf
+    networks:
+      link1:
+        ipv4_address: 10.99.0.3
+    cap_add:
+      - NET_ADMIN
+
+networks:
+  link1:
+    ipam:
+      config:
+        - subnet: 10.99.0.0/24
+          gateway: 10.99.0.1
